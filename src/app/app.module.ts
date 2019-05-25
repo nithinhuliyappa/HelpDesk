@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { HeaderComponent } from './components/header/header.component';
@@ -18,8 +18,8 @@ import { HeaderComponent } from './components/header/header.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig, 'help-desk'), // Required for everything
-    AngularFirestoreModule, // Only required for database features
+    AngularFireModule.initializeApp(environment.firebaseConfig), // Required for everything
+    AngularFireDatabaseModule, // Only required for database features
     AngularFireAuthModule // Only required for auth features
   ],
   providers: [],

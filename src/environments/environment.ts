@@ -10,8 +10,7 @@ export const environment = {
     databaseURL: "https://help-desk-c49dc.firebaseio.com",
     projectId: "help-desk-c49dc",
     storageBucket: "help-desk-c49dc.appspot.com",
-    messagingSenderId: "337548050475",
-    appId: "1:337548050475:web:b037146dafa47d95"
+    messagingSenderId: "337548050475"
   }
 };
 
