@@ -1,0 +1,34 @@
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Welcome to 49ers IT Help Desk</h1>
+  </div>
+
+  <!-- Content Row -->
+  <div class="row">
+
+    <!-- Card Menu -->
+    <div class="home-menu col-xl-2 col-md-3 mb-4" *ngFor="let menu of menuList">
+      <div class="card border-left-success shadow h-100 py-2">
+        <div class="card-body">
+          <div class="col-auto text-center">
+            <i class="material-icons md-70 text-gray-300">{{menu.icon}}</i>
+          </div>
+          <div class="row no-gutters">
+            <div class="col mr-2">
+              <div class="text-xs text-center mb-1">
+                <a 
+                  class="font-weight-bold text-success text-uppercase" 
+                  routerLink="{{menu.link}}">
+                  {{menu.title}}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
