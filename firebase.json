@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/help-desk",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
