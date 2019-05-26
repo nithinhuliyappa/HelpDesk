@@ -1,4 +1,8 @@
-<app-header *ngIf="showHeader()"></app-header>
+<app-header 
+  *ngIf="showHeader()"
+  (linkClick)="onLinkClick($event)"></app-header>
 
 <!-- Primary outlet -->
 <router-outlet></router-outlet>
+
+<app-loader [loading]="loading | async"></app-loader>

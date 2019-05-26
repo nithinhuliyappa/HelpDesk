@@ -1,0 +1,9 @@
+.page-link {
+  padding: 0.1rem 0.75rem;
+  color: #004525;
+}
+
+.page-item.active .page-link {
+  background-color: #004525;
+  border-color: #004525;
+}

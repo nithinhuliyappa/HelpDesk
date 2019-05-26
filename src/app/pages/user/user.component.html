@@ -1,3 +1,5 @@
-<p>
-  users works!
-</p>
+<app-data-table [columns]="columns" [data]="items | async">
+  <ng-template cellTemplate="role" let-dataItem>
+    <span>{{dataItem['role'] | titlecase }}</span>
+  </ng-template>
+</app-data-table>
