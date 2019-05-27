@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { UserService } from 'src/app/services/user.service';
+import { USER_COLUMNS } from './column.config';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  items: Observable<any[]>;
+
+  constructor(private user: UserService) { }
 
   ngOnInit() {
+    this.items = this.user.getTickets();
+  }
+
+  get columns() {
+    return USER_COLUMNS;
   }
 
 }

@@ -1,0 +1,14 @@
+<div *ngIf="page > 1" 
+    class="d-flex justify-content-between p-2">
+  <div 
+    class="dataTables_info" id="dataTable_info" 
+    role="status" 
+    aria-live="polite">
+    Showing {{start}} to {{end}} 
+    of {{total}} entries
+  </div>
+  <ngb-pagination
+    [collectionSize]="total" 
+    [(page)]="page" [pageSize]="pageSize">
+  </ngb-pagination>
+</div>

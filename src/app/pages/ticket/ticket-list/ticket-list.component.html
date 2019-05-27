@@ -1,5 +1,10 @@
-<ul>
-  <li class="text" *ngFor="let item of items | async">
-    {{item.summary}}
-  </li>
-</ul>
+<app-data-table [columns]="columns" [data]="items | async">
+  <ng-template cellTemplate="status" let-dataItem>
+    <span>{{dataItem['status'] | titlecase}}</span>
+  </ng-template>
+  <ng-template cellTemplate="action" let-dataItem>
+    <a href="#" title="Edit" (click)="onRowClick(dataItem, $event)">
+      <i class="material-icons">edit</i>
+    </a>
+  </ng-template>
+</app-data-table>

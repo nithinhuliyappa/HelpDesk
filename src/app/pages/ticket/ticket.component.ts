@@ -15,7 +15,7 @@ export class TicketComponent implements OnInit {
   ngOnInit() {
   }
 
-  open(content) {
+  open(content, data) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       // submit form
     }, (reason) => {

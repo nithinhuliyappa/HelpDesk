@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { TicketDetailsComponent } from './ticket-details/ticket-details.component';
 import { TicketComponent } from './ticket.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DataTableModule } from 'src/app/components/data-table/data-table.module';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     NgbModule,
+    DataTableModule,
     RouterModule.forChild(routes)
   ],
   exports: [
