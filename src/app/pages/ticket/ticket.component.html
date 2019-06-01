@@ -1,17 +1,27 @@
-<app-ticket-list (rowClick)="open(content, $event)"></app-ticket-list>
+<div class="container-fluid">
 
-<!-- Modal -->
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Ticket Details</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
+  <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Manage Tickets</h1>
   </div>
-  <div class="modal-body d-flex justify-content-center">
-    <app-ticket-details></app-ticket-details>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Save</button>
-  </div>
-</ng-template>
+
+  <app-ticket-filter></app-ticket-filter>
+
+  <app-ticket-list (rowClick)="open(content, $event)"></app-ticket-list>
+
+  <!-- Modal -->
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Ticket Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body d-flex justify-content-center">
+      <app-ticket-details></app-ticket-details>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+</div>
