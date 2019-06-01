@@ -6,6 +6,7 @@ import { TicketDetailsComponent } from './ticket-details/ticket-details.componen
 import { TicketComponent } from './ticket.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from 'src/app/components/data-table/data-table.module';
+import { TicketFilterComponent } from './ticket-filter/ticket-filter.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
   declarations: [
     TicketListComponent,
     TicketDetailsComponent,
-    TicketComponent
+    TicketComponent,
+    TicketFilterComponent
   ],
   imports: [
     CommonModule,
