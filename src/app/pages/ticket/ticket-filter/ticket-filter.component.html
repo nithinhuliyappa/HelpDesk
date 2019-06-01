@@ -1,0 +1,15 @@
+<div class="card text-white bg-success filter-heading" (click)="isCollapsed = !isCollapsed"
+  [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+  <div class="d-flex justify-content-between mx-2 my-2">
+    <span>Filters</span>
+    <i class="material-icons">filter_list</i>
+  </div>
+</div>
+
+<div id="collapseExample" [ngbCollapse]="isCollapsed">
+  <div class="card">
+    <div class="card-body">
+      You can collapse this card by clicking Toggle
+    </div>
+  </div>
+</div>

@@ -2,8 +2,8 @@
   border-bottom: .25rem solid rgba(0,69,37,0.8) !important;
 }
 
-.material-icons {
-  color:rgba(0,69,37,0.8) !important;
+.icon-success {
+  color: rgba(0,69,37,0.7) !important;
 }
 
 .text-gray-800 {
@@ -16,6 +16,10 @@
 
 .material-icons.md-70 { 
   font-size: 70px; 
+}
+
+.card-header {
+  padding: 0; 
 }
 
 
