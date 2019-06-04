@@ -34,4 +34,11 @@ export class TicketFilterComponent implements OnInit {
     this.ticket.applyFilter(form.value);
   }
 
+  reset() {
+    this.form.reset({
+      status: '',
+      priority: ''
+    });
+  }
+
 }

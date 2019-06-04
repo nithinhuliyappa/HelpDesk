@@ -18,17 +18,18 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
     <div class="row ">
       <div class="col">
-        <select formControlName="priority" id="priority" class="form-control">
+        <select formControlName="priority" id="priority" class="form-control form-control-sm">
           <option [value]="p.value" *ngFor="let p of priorityList">{{p.label}}</option>
         </select>
       </div>
       <div class="col">
-        <select formControlName="status" id="status" class="form-control">
+        <select formControlName="status" id="status" class="form-control form-control-sm">
           <option [value]="s.value" *ngFor="let s of statusList">{{s.label}}</option>
         </select>
       </div>
       <div class="col">
-        <button type="submit" class="btn btn-success">Apply</button>
+        <button type="submit" class="btn btn-success btn-sm">Apply</button>
+        <button type="button" class="btn btn-outline-success btn-sm ml-2" (click)="reset()">Reset</button>
       </div>
     </div>
   </form>
