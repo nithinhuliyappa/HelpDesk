@@ -9,7 +9,27 @@
 <div id="collapseExample" [ngbCollapse]="isCollapsed">
   <div class="card">
     <div class="card-body">
-      You can collapse this card by clicking Toggle
+      <ng-container *ngTemplateOutlet="filterForm"></ng-container>
     </div>
   </div>
 </div>
+
+<ng-template #filterForm>
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+    <div class="row ">
+      <div class="col">
+        <select formControlName="priority" id="priority" class="form-control">
+          <option [value]="p.value" *ngFor="let p of priorityList">{{p.label}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <select formControlName="status" id="status" class="form-control">
+          <option [value]="s.value" *ngFor="let s of statusList">{{s.label}}</option>
+        </select>
+      </div>
+      <div class="col">
+        <button type="submit" class="btn btn-success">Apply</button>
+      </div>
+    </div>
+  </form>
+</ng-template>

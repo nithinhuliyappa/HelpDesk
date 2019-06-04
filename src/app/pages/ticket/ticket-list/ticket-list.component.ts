@@ -18,7 +18,8 @@ export class TicketListComponent implements OnInit {
   constructor(private ticket: TicketService) { }
 
   ngOnInit() {
-    this.items = this.ticket.getTickets();
+    this.items = this.ticket.tickets;
+    this.ticket.getTickets();
   }
 
   get columns() {
