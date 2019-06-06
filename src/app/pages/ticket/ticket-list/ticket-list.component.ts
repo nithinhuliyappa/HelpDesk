@@ -21,6 +21,10 @@ export class TicketListComponent implements OnInit {
     this.items = this.ticket.getTickets();
   }
 
+  updateStatus(ticketItem) {
+    this.ticket.updateTicketStatus(ticketItem, 'open');
+  }
+
   get columns() {
     return TICKET_COLUMNS;
   }
