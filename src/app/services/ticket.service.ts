@@ -15,7 +15,7 @@ function search(data){
 @Injectable({
   providedIn: 'root'
 })
-export class TicketService implements OnDestroy {
+export class TicketService {
 
   private _filterData: Ticket;
   private _data: Ticket[];
@@ -25,8 +25,9 @@ export class TicketService implements OnDestroy {
   constructor(private db: AngularFireDatabase,
               private loader: LoaderService) {}
 
-  ngOnDestroy(): void {
+  destroy(): void {
     this.subs.unsubscribe();
+    this._filterData = null;
   }
 
   getTickets() {

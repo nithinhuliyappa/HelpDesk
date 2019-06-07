@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketService } from 'src/app/services/ticket.service';
 import { TICKET_COLUMNS } from './column.config';
@@ -8,7 +8,7 @@ import { TICKET_COLUMNS } from './column.config';
   templateUrl: './ticket-list.component.html',
   styleUrls: ['./ticket-list.component.scss']
 })
-export class TicketListComponent implements OnInit {
+export class TicketListComponent implements OnInit, OnDestroy {
 
   items: Observable<any[]>;
 
@@ -20,6 +20,10 @@ export class TicketListComponent implements OnInit {
   ngOnInit() {
     this.items = this.ticket.tickets;
     this.ticket.getTickets();
+  }
+
+  ngOnDestroy(): void {
+    this.ticket.destroy();
   }
 
   get columns() {
