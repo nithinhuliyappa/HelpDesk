@@ -1,12 +1,9 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { LoaderService } from './loader.service';
 import { of, Subject } from 'rxjs';
 import { SubSink } from 'subsink';
-
-export interface Ticket {
-  id: string;
-}
+import { Ticket } from '../metadata/ticket.metadata';
 
 function search(data){
   return Object.keys(this).every((key) => data[key] === this[key]);

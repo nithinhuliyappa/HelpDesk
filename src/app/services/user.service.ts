@@ -1,25 +1,50 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from '@angular/fire/database';
 import { LoaderService } from './loader.service';
-import { catchError, map } from 'rxjs/operators';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { UserProfile } from '../metadata/user.metadata';
 import { of } from 'rxjs';
+import { catchError, map, take } from 'rxjs/operators';
+import { SubSink } from 'subsink';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
+  private currUserProfile: UserProfile;
+  private subs = new SubSink();
+
   constructor(private db: AngularFireDatabase,
               private loader: LoaderService) { }
 
-  getTickets() {
+  get userProfile(): UserProfile {
+    return this.currUserProfile;
+  }
+
+  getUsers() {
     this.loader.startLoader();
-    return this.db.list('/users').valueChanges().pipe(
-      map(data => {
+    return this.db.list('/users').snapshotChanges().pipe(
+      map(users => {
         this.loader.stopLoader();
-        return data;
+        return users.map(a => {
+          const data = a.payload.val() as UserProfile;
+          data.id = a.payload.key;
+          return data;
+        });
       }),
       catchError(error => of([]))
     );
+  }
+
+  getUserById(uid) {
+    this.db.list('/users', ref => ref.orderByChild('uid').equalTo(uid))
+    .snapshotChanges().pipe(take(1)).subscribe(items => {
+      this.currUserProfile = items.map(a => {
+        const data = a.payload.val() as UserProfile;
+        data.id = a.payload.key;
+        return data;
+      })[0];
+    },
+    error => of([]));
   }
 }

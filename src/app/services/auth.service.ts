@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
 import { LoaderService } from './loader.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { LoaderService } from './loader.service';
 export class AuthService {
 
   constructor(private authDb: AngularFireAuth,
-              private loader: LoaderService) { }
+              private loader: LoaderService,
+              private user: UserService) { }
 
   register(user){
     return new Promise<any>((resolve, reject) => {
@@ -29,9 +31,12 @@ export class AuthService {
     return new Promise<any>((resolve, reject) => {
       this.authDb.auth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        callback();
-        this.loader.stopLoader();
-        resolve(res);
+        setTimeout(() => {
+          callback();
+          this.loader.stopLoader();
+          resolve(res);
+        }, 500);
+        this.user.getUserById(res.user.uid);
       }, err => reject(err));
     });
   }
