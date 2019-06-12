@@ -11,10 +11,12 @@ import { environment } from 'src/environments/environment';
 import { HeaderModule } from './components/header/header.module';
 import { LoaderModule } from './components/loader/loader.module';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -22,9 +24,12 @@ import { LoaderModule } from './components/loader/loader.module';
     LoaderModule,
     AngularFireModule.initializeApp(environment.firebaseConfig), // Required for everything
     AngularFireDatabaseModule, // Only required for database features
-    AngularFireAuthModule // Only required for auth features
+    AngularFireAuthModule, // Only required for auth features
+    ReactiveFormsModule, // For Registration(Reactive)
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({ timeOut: 5000, positionClass: 'toast-top-center' })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
