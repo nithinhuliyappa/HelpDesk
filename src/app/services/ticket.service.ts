@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { LoaderService } from './loader.service';
-import { of, Subject } from 'rxjs';
+import { of, Subject, combineLatest } from 'rxjs';
 import { SubSink } from 'subsink';
 import { Ticket } from '../metadata/ticket.metadata';
+import { UserProfile } from '../metadata/user.metadata';
 
 function search(data){
   return Object.keys(this).every((key) => data[key] === this[key]);
@@ -29,17 +30,31 @@ export class TicketService {
 
   getTickets() {
     this.loader.startLoader();
-    this.subs.add(this.db.list('/tickets', ref => ref.orderByChild('createdUser').equalTo('5ce97a235cc3a076005128a0'))
-    .snapshotChanges().subscribe(items => {
+    const obv1 = this.db.list('/tickets', ref => ref.orderByChild('createdUser').equalTo('5ce97a235cc3a076005128a0')).snapshotChanges();
+    const obv2 = this.db.list('/users').valueChanges();
+
+    this.subs.add(combineLatest(obv1, obv2).subscribe(results => {
+      // results[0] is our character
+      // results[1] is our character homeworld
       this.loader.stopLoader();
-      this._data = items.map(a => {
+      this._data = results[0].map(a => {
         const data = a.payload.val() as Ticket;
         data.id = a.payload.key;
+        const assignedUser = results[1].find(user => {
+          const userProfile = user as UserProfile;
+          return userProfile.uid === data.assignedTo;
+        }) as UserProfile;
+        if (assignedUser) {
+          data.assignedUser = assignedUser.firstName + ' ' + assignedUser.lastName;
+        }
         return data;
       });
       this.filter();
+
     },
-    error => of([])));
+    error => of([]),
+    ));
+
   }
 
   get tickets() {
