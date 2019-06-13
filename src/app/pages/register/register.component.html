@@ -1,3 +1,129 @@
-<p>
-  register works!
-</p>
+<div class="xs container mt-2">
+  <div class="card">
+    <div class="d-flex justify-content-center">
+      <img src="assets/uncc-logo.png" width="70" height="70" alt="uncc-logo">
+      <h2 class="display-4 ml-3">Registration</h2>
+    </div>
+    <form [formGroup]="registrationForm" class="p-5" (ngSubmit)="register(registrationForm.value)">
+      <div class="row">
+        <div class="form-group col-6">
+          <input type="text" formControlName="firstName" class="form-control" placeholder="First Name" />
+          <div *ngIf="firstName.touched" class="pl-2 validation-error">
+            <div *ngIf="firstName.errors && (firstName?.errors)['required']">
+              Required*
+            </div>
+            <div *ngIf="firstName.errors && (firstName?.errors)['pattern']">
+              contains invalid Characters
+            </div>
+            <div *ngIf="firstName.errors && (firstName?.errors)['minlength']">
+              min length 3
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-6">
+          <input type="text" formControlName="lastName" class="form-control" placeholder="Last Name" />
+          <div *ngIf="lastName.touched" class="pl-2 validation-error">
+            <div *ngIf="lastName.errors && (lastName?.errors)['required']">
+              Required*
+            </div>
+            <div *ngIf="lastName.errors && (lastName?.errors)['pattern']">
+              contains invalid Characters
+            </div>
+            <div *ngIf="lastName.errors && (lastName?.errors)['minlength']">
+              min length 3
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-12">
+          <input type="email" formControlName="email" placeholder="Email" class="form-control" />
+          <div *ngIf="email.touched" class="pl-2 validation-error">
+            <div *ngIf="email.errors && (email?.errors)['required']">
+              Required*
+            </div>
+            <div *ngIf="email?.errors && (email?.errors)['email']">
+              contains invalid Characters
+            </div>
+            <div *ngIf="email.valid && email.dirty && email.value" class="text-success">
+              email is valid
+            </div>
+            <div *ngIf="email.pending" class="text-secondary">
+              {{ email.value }} checking availability ......
+            </div>
+            <div *ngIf="
+                email?.errors &&
+                email.dirty &&
+                !(email?.errors)['emailAvailable'] &&
+                !(email?.errors)['email']
+              ">
+              {{ email.value }} is already registered
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-6">
+          <input type="password" formControlName="password" placeholder="Password" class="form-control" />
+
+          <div *ngIf="password.touched" class="pl-2 validation-error">
+            <div *ngIf="password?.errors && (password?.errors)['required']">
+              Required*
+            </div>
+            <div *ngIf="password?.errors && (password?.errors)['pattern']">
+              password invalid please choose other
+            </div>
+            <div *ngIf="password?.errors && (password?.errors)['minlength']">
+              should contain atleast 6 characters
+            </div>
+            <div *ngIf="password?.errors && (password?.errors)['maxlength']">
+              should contain atmost 20 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group col-6">
+          <input type="password" formControlName="cpassword" placeholder="Confirm Password" class="form-control" />
+
+          <div *ngIf="
+              registrationForm?.errors &&
+              (registrationForm?.errors)['passwordMismatch']
+            " class="validation-error text-center">
+            password mismatch
+          </div>
+        </div>
+        <small id="passwordHelp" class="text-center p-2 form-text text-muted">password requirements: 1 letter,1 numeric,
+          1 special character and
+          min length 6</small>
+      </div>
+      <br />
+      <div class="row">
+        <div class="form-group col-12">
+          <select class="form-control" formControlName="role" required>
+            <option value="">Select Role</option>
+            <option value="employee">Employee</option>
+            <option value="admin">Admin</option>
+          </select>
+          <div *ngIf="role.touched" class="pl-2 validation-error">
+            <div *ngIf="role.errors && (role?.errors)['required']">
+              please select one
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-6">
+          <button type="submit" class="btn btn-success btn-block my-2 my-sm-0"
+            [disabled]="registrationForm.invalid || registrationForm.untouched">
+            Submit
+          </button>
+        </div>
+        <div class="form-group col-6">
+          <button type="button" class="btn btn-outline-success btn-block my-2 my-sm-0" (click)="cancel()">
+            cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

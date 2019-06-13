@@ -4,7 +4,6 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { UserProfile } from '../metadata/user.metadata';
 import { of } from 'rxjs';
 import { catchError, map, take } from 'rxjs/operators';
-import { SubSink } from 'subsink';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,6 @@ import { SubSink } from 'subsink';
 export class UserService {
 
   private currUserProfile: UserProfile;
-  private subs = new SubSink();
 
   constructor(private db: AngularFireDatabase,
               private loader: LoaderService) { }
@@ -23,14 +21,10 @@ export class UserService {
 
   getUsers() {
     this.loader.startLoader();
-    return this.db.list('/users').snapshotChanges().pipe(
+    return this.db.list('/users').valueChanges().pipe(
       map(users => {
         this.loader.stopLoader();
-        return users.map(a => {
-          const data = a.payload.val() as UserProfile;
-          data.id = a.payload.key;
-          return data;
-        });
+        return users;
       }),
       catchError(error => of([]))
     );
@@ -38,13 +32,19 @@ export class UserService {
 
   getUserById(uid) {
     this.db.list('/users', ref => ref.orderByChild('uid').equalTo(uid))
-    .snapshotChanges().pipe(take(1)).subscribe(items => {
-      this.currUserProfile = items.map(a => {
-        const data = a.payload.val() as UserProfile;
-        data.id = a.payload.key;
-        return data;
-      })[0];
+    .valueChanges().pipe(take(1)).subscribe(items => {
+      this.currUserProfile = items ? items[0] as UserProfile : null;
     },
     error => of([]));
+  }
+
+  async addUser({ email, firstName, lastName, role }: UserProfile, uid) {
+    try {
+      await this.db.object(`users/${uid}`).set({ uid, email, firstName, lastName, role});
+      return 'user Added succesfully';
+    } catch (error) {
+      console.error(error.message);
+      return error;
+    }
   }
 }

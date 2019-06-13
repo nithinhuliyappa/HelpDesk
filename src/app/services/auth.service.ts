@@ -13,12 +13,16 @@ export class AuthService {
               private loader: LoaderService,
               private user: UserService) { }
 
-  register(user){
+  register(user, callback){
     return new Promise<any>((resolve, reject) => {
-      this.authDb.auth.createUserWithEmailAndPassword(user.email, user.password)
-      .then(res => {
-        resolve(res);
-      }, err => reject(err));
+      this.authDb.auth.createUserWithEmailAndPassword(user.email, user.password).then(async res => {
+        const { uid } = res.user;
+        const response = this.user.addUser(user, uid);
+        callback();
+        this.loader.stopLoader();
+        resolve(response);
+      })
+      .catch(err => reject(err));
     });
   }
 
