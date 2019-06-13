@@ -2,3 +2,31 @@
     color: #004525 !important;
     cursor: default;
 }
+
+form {
+    border: 3px solid #f1f1f1;
+  }
+
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+}
+
+img.uncc-logo {
+    width:"70";
+    height:"70";
+}
+
+input[type=email], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #004525;
+    border: none;
+}

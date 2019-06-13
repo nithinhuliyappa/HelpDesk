@@ -1,0 +1,13 @@
+$color-red: #e41616;
+.xs {
+  max-width: 576px;
+}
+
+input.ng-touched.ng-invalid {
+  border-color: $color-red;
+}
+
+.validation-error {
+  font-size: 75%;
+  color: $color-red;
+}

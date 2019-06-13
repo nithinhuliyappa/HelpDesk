@@ -7,6 +7,7 @@ import { TicketComponent } from './ticket.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from 'src/app/components/data-table/data-table.module';
 import { TicketFilterComponent } from './ticket-filter/ticket-filter.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -26,6 +27,7 @@ const routes: Routes = [
     CommonModule,
     NgbModule,
     DataTableModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
   exports: [
