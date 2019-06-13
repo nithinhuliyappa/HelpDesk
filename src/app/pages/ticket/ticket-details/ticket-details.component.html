@@ -1,23 +1,30 @@
-<div>
-Assigned To: {{ticketFromParent.assignedTo}}
-<br><br>
-Caller: {{ticketFromParent.assignedUser}}
-<br><br>
-Created Date: {{ticketFromParent.createdDate}}
-<br><br>
-Updated Date: {{ticketFromParent.lastUpdatedDate}}
-<br><br>
-Status: {{ticketFromParent.status}}
-<br><br>
-Priority: {{ticketFromParent.priority}}
-<br><br>
-Description: {{ticketFromParent.summary}}
-<br><br>
-Comments visible by user: admin and employee can add comments. No comments can be removed once added.
-<br><br>
-Work Notes: comments only visible by admin accounts, be sure to retain order based on timestamp with normal comments
-<br><br>
-<button>Resolve</button>
-Resolved comment (editable by admin only) use function to change to resolved
-<br><br>
-</div>
+<form [formGroup]="editTicketForm" (ngSubmit)="updateTicket(editTicketForm.value)">
+
+  <div>
+      Assigned To: <input type="text" formControlName="assignedTo" value={{ticketFromParent.assignedTo}} />
+  <br><br>
+      Caller: <input type="text" formControlName="assignedUser" value={{ticketFromParent.assignedUser}} /> 
+  <br><br>
+      Created Date: <input type="text" formControlName="createdDate" size="22" value={{ticketFromParent.createdDate}} disabled/>
+  <br><br>
+      Updated Date: <input type="text" formControlName="lastUpdatedDate" size="22" value={{ticketFromParent.lastUpdatedDate}} disabled/>
+  <br><br>
+      Status: <input type="text" formControlName="status" value={{ticketFromParent.status}} /> 
+  <br><br>
+      Priority: <input type="text" formControlName="priority" value={{ticketFromParent.priority}} /> 
+  <br><br>
+      Description: <input type="text" formControlName="summary" value={{ticketFromParent.summary}} /> 
+  <br><br>
+      Comments visible by user: admin and employee can add comments. No comments can be removed once added.
+      <input type="text" formControlName="comments" value={{ticketFromParent.comments}} /> 
+  <br><br>
+      Work Notes: comments only visible by admin accounts, be sure to retain order based on timestamp with normal comments
+      <input type="text" formControlName="workNotes" value={{ticketFromParent.workNotes}} /> 
+  <br><br>
+      Resolved comment (editable by admin only) use function to change to resolved
+      <input type="text" formControlName="resolvedComment" value={{ticketFromParent.resolvedComment}} /> 
+  <br>
+      <button>Resolve</button>
+
+  </div>
+</form>

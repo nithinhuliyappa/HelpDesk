@@ -4,6 +4,13 @@ export interface Ticket {
   priority: string;
   assignedTo: string;
   assignedUser: string;
+  createdDate: string,
+  lastUpdatedDate: string,
+  summary: string,
+  comments: string[],
+  workNotes: string[]
+  resolved: boolean,
+  resolvedComment: string[]
 }
 
 export const TICKET_STATUS = [
