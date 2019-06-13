@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     const callback = () => this.router.navigate(['/home']);
-    this.auth.login('sophiedunlap@quintity.com', '123456', callback);
+    this.auth.login('employee@gmail.com', 'employee@1234', callback);
   }
 
   register() {

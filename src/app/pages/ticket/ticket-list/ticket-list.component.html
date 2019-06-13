@@ -2,6 +2,11 @@
   <ng-template cellTemplate="status" let-dataItem>
     <span>{{dataItem['status'] | titlecase}}</span>
   </ng-template>
+  
+  <ng-template cellTemplate="priority" let-dataItem>
+    <span>{{dataItem['priority'] | titlecase}}</span>
+  </ng-template>
+
   <ng-template cellTemplate="action" let-dataItem>
     <a href="#" title="Edit" (click)="onRowClick(dataItem, $event)">
       <i class="material-icons icon-success">edit</i>

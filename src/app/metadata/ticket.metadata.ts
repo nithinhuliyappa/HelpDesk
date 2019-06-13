@@ -2,6 +2,8 @@ export interface Ticket {
   id: string;
   status: string;
   priority: string;
+  assignedTo: string;
+  assignedUser: string;
 }
 
 export const TICKET_STATUS = [

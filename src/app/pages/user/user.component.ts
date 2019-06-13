@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
   constructor(private user: UserService) { }
 
   ngOnInit() {
-    this.items = this.user.getTickets();
+    this.items = this.user.getUsers();
   }
 
   get columns() {

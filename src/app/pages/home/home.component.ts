@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Menu, menuList } from './menu-list';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -8,13 +9,20 @@ import { Menu, menuList } from './menu-list';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  constructor(private user: UserService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   get menuList(): Menu[] {
-    return menuList;
+    return menuList.filter(item => {
+      if (item.role === 'all') {
+        return true;
+      } else if (item.role === this.user.userProfile.role) {
+        return true;
+      } else {
+        return false;
+      }
+    });
   }
 
 }
