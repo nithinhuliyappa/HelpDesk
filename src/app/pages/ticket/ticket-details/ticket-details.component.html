@@ -1,3 +1,23 @@
-<p>
-  ticket-details works!
-</p>
+<div>
+Assigned To: {{ticketFromParent.assignedTo}}
+<br><br>
+Caller: {{ticketFromParent.assignedUser}}
+<br><br>
+Created Date: {{ticketFromParent.createdDate}}
+<br><br>
+Updated Date: {{ticketFromParent.lastUpdatedDate}}
+<br><br>
+Status: {{ticketFromParent.status}}
+<br><br>
+Priority: {{ticketFromParent.priority}}
+<br><br>
+Description: {{ticketFromParent.summary}}
+<br><br>
+Comments visible by user: admin and employee can add comments. No comments can be removed once added.
+<br><br>
+Work Notes: comments only visible by admin accounts, be sure to retain order based on timestamp with normal comments
+<br><br>
+<button>Resolve</button>
+Resolved comment (editable by admin only) use function to change to resolved
+<br><br>
+</div>
