@@ -6,18 +6,13 @@
 <form [formGroup]="form" (ngSubmit)="login(form)">
     <div class="form-group">
       <label for="email"><b>Email address</b></label>
-    <select formControlName="email" id="email" class="form-control form-control-sm">
-      <option [value]="e.value" *ngFor="">{{e.label}}</option>
-      <input type="email" class="form-control" placeholder="Enter email" name="email" required>
+      <input formControlName="email" type="email" class="form-control" placeholder="Enter email" name="email" required>
       <small id="emailHelp" class="form-text text-muted"></small>
-    </select>
     </div>
     <div class="form-group">
       <label for="password"><b>Password</b></label>
-    <select formControlName="password" id="password" class="form-control form-control-sm">
-      <option [value]="p.value" *ngFor="">{{p.label}}</option>
-      <input type="password" class="form-control" placeholder="Password" name="password" required>
-    </select>
+      <input formControlName="password" type="password" class="form-control" placeholder="Password" name="password" required>
     </div>
     <button type="submit" class="btn btn-primary">Login</button>
+    <button type="button" (click)="register()" class="btn btn-primary">Register</button>
 </form>
