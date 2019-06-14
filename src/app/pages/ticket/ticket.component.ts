@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TicketService } from 'src/app/services/ticket.service';
@@ -18,14 +18,11 @@ export class TicketComponent implements OnInit {
   }
 
   open(content, data) {
-
     this.currentTicket = data;
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       // submit form
     }, (reason) => {
     });
-
-
   }
 
 }
