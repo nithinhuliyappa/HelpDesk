@@ -16,11 +16,6 @@ export class TicketDetailsComponent implements OnInit {
 
   editTicketForm: FormGroup;
 
-  today = new Date();
-  date = this.today.getFullYear() + '-' + (this.today.getMonth() + 1) + '-' + this.today.getDate();
-  time = this.today.getHours() + ':' + this.today.getMinutes() + ':' + this.today.getSeconds();
-  dateTime = this.date + ' ' + this.time; // use for when the user saves the ticket, the updated date changes to this value
-
   @Output()
   closeModal = new EventEmitter<any>();
 
@@ -33,7 +28,7 @@ export class TicketDetailsComponent implements OnInit {
     this.buildForm();
     this.editTicketForm.patchValue(this.ticketFromParent);
   }
-  
+
   get isAdmin() {
     return this.user.userProfile.role === 'admin';
   }
@@ -53,15 +48,14 @@ export class TicketDetailsComponent implements OnInit {
         status: ['', [Validators.required]],
         priority: ['', [Validators.required]],
         summary: ['', [Validators.required]],
-        comments: ['', [Validators.required]],
         workNotes: ['', [Validators.required]],
         resolvedComment: ['', [Validators.required]]
       }
     );
   }
 
-  updateTicket(formDataThatChanged) {
-    this.ticket.updateTicket(formDataThatChanged);
+  updateTicket(formDataThatChanged: Ticket) {
+    this.ticket.updateTicket(formDataThatChanged, null);
     // use this function to save any changed data to the database
     this.closeModal.emit();
   }

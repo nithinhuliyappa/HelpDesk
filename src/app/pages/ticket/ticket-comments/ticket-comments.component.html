@@ -1,0 +1,15 @@
+<div class="mb-3" *ngIf="(comments | async) as cmts">
+  <div class="card" *ngFor="let cmt of cmts">
+    <div class="card-body">
+      <h5 class="card-title">{{cmt.name}}</h5>
+      <p class="card-text">{{cmt.message}}</p>
+    </div>
+  </div>
+</div>
+
+<form [formGroup]="form">
+  <div class="d-flex justify-content-between">
+    <textarea placeholder="Enter comments" class="form-control" formControlName="message" rows="1"></textarea>
+    <button type="button" (click)="addComment()" class="btn btn-sm btn-success ml-1">Send</button>
+  </div>
+</form>

@@ -37,13 +37,8 @@
   <div class="form-group row">
     <label for="status" class="col-sm-4 col-form-label">Status:</label>
     <div class="col-sm-8">
-      <select *ngIf="isAdmin; else statusText" id="status" class="form-control" formControlName="status">
-        <option *ngFor="let opt of statusOptions" [value]="opt.value">{{opt.label}}</option>
-      </select>
-      <ng-template #statusText>
-        <input id="status" type="text" formControlName="status" readonly class="form-control-plaintext"
-            [value]="editTicketForm.get('status').value | titlecase">
-      </ng-template>
+      <input id="status" type="text" formControlName="status" readonly class="form-control-plaintext"
+          [value]="editTicketForm.get('status').value | titlecase">
     </div>
   </div>
   <div class="form-group row">
@@ -58,12 +53,6 @@
       </ng-template>
     </div>
   </div>
-  <div class="form-group row">
-    <label for="comments" class="col-sm-4 col-form-label">Comments:</label>
-    <div class="col-sm-8">
-      <textarea class="form-control" formControlName="comments" id="comments" rows="3"></textarea>
-    </div>
-  </div>
   <div *ngIf="isAdmin" class="form-group row">
     <label for="workNotes" class="col-sm-4 col-form-label">Work Notes:</label>
     <div class="col-sm-8">
@@ -76,7 +65,12 @@
       <textarea class="form-control" formControlName="resolvedComment" id="resolvedComment" rows="3"></textarea>
     </div>
   </div>
+
   <div class="d-flex justify-content-end">
-    <button type="submit" class="btn btn-success">Submit</button>
+    <button type="button" class="btn btn-success mr-2">Resolved</button>
+    <button type="submit" *ngIf="isAdmin" class="btn btn-success">Submit</button>
   </div>
 </form>
+
+<div class="dropdown-divider mb-3"></div>
+<app-ticket-comments [ticket]="ticketFromParent"></app-ticket-comments>

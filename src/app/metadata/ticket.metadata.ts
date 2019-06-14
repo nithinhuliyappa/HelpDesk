@@ -9,9 +9,15 @@ export interface Ticket {
   createdUserName: string;
   lastUpdatedDate: string;
   summary: string;
-  comments: string;
+  comments?: TicketComment[];
   workNotes: string;
   resolvedComment: string;
+}
+
+export interface TicketComment {
+  message: string;
+  uid: string;
+  name: string;
 }
 
 export const TICKET_STATUS = [

@@ -108,47 +108,34 @@ export class TicketService {
     this.filter();
   }
 
-  // EX usage: this.ticket.updateTicketStatus(ticketItem, 'open');
-  // where ticket is a TicketService object, and ticketItem as an item from the database
-  // tested with <button (click)="updateStatus(dataItem)">Update Status</button> // on ticket-list html
-  updateTicket(ticket: Ticket) {
-    let statusToDatabase = '';
-    // console.log(this.tickets);
-    switch (status) {
-      case 'open': // when the ticket is first open
-        statusToDatabase = 'Open';
-        break;
-      case 'inProgress': // when the ticket is first assigned and when user posts a comment
-        statusToDatabase = 'In Progress';
-        break;
-      case 'pending': // when an admin comments, pending user response
-        statusToDatabase = 'Pending User Response';
-        break;
-      case 'resolved': // when a user or admin resolves the ticket
-        statusToDatabase = 'Resolved';
-        break;
-      case 'new': // not sure where this will be used yet
-        statusToDatabase = 'New';
-        break;
-      default: // wrong value passed
-        console.log('status was not changed');
-        break;
+  updateTicket(ticket: Ticket, callback) {
+
+    // update 
+    if (ticket.status === 'open' && ticket.comments.length !== null) {
+      ticket.status = 'inProgress';
     }
-    if (statusToDatabase !== '') {
-      this.db.list('/tickets').update(ticket.id, {
-        assignedTo: ticket.assignedTo,
-        createdDate: ticket.createdDate,
-        createdUser: ticket.createdUser,
-        lastUpdatedDate: ticket.lastUpdatedDate,
-        priority: ticket.priority,
-        status: ticket.status,
-        summary: ticket.summary,
-        comments: ticket.comments,
-        workNotes: ticket.workNotes,
-        resolvedComment: ticket.resolvedComment
-      });
-    } else {
-      console.log('Second parameter invalid to updateTicketStatus');
-    }
+
+    // update last updated time
+    ticket.lastUpdatedDate = this.getCurrDateTime();
+
+    this.db.list('/tickets').update(ticket.id, {
+      assignedTo: ticket.assignedTo,
+      createdDate: ticket.createdDate,
+      createdUser: ticket.createdUser,
+      lastUpdatedDate: ticket.lastUpdatedDate,
+      priority: ticket.priority,
+      status: ticket.status,
+      summary: ticket.summary,
+      comments: ticket.comments,
+      workNotes: ticket.workNotes,
+      resolvedComment: ticket.resolvedComment
+    });
+  }
+
+  getCurrDateTime() {
+    const today = new Date();
+    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    return date + ' ' + time; // use for when the user saves the ticket, the updated date changes to this value
   }
 }
