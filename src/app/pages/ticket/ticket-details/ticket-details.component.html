@@ -1,23 +1,36 @@
-<div>
-Assigned To: {{ticketFromParent.assignedTo}}
-<br><br>
-Caller: {{ticketFromParent.assignedUser}}
-<br><br>
-Created Date: {{ticketFromParent.createdDate}}
-<br><br>
-Updated Date: {{ticketFromParent.lastUpdatedDate}}
-<br><br>
-Status: {{ticketFromParent.status}}
-<br><br>
-Priority: {{ticketFromParent.priority}}
-<br><br>
-Description: {{ticketFromParent.summary}}
-<br><br>
-Comments visible by user: admin and employee can add comments. No comments can be removed once added.
-<br><br>
-Work Notes: comments only visible by admin accounts, be sure to retain order based on timestamp with normal comments
-<br><br>
-<button>Resolve</button>
-Resolved comment (editable by admin only) use function to change to resolved
-<br><br>
-</div>
+<form [formGroup]="editTicketForm" (ngSubmit)="updateTicket(editTicketForm.value)">
+
+  <div>
+      Assigned To: <input type="text" formControlName="assignedTo" />
+  <br><br>
+      Caller: <input type="text" formControlName="assignedUser" /> 
+  <br><br>
+      Created Date: <input type="text" formControlName="createdDate" size="22" disabled/>
+  <br><br>
+      Updated Date: <input type="text" formControlName="lastUpdatedDate" size="22" disabled/>
+  <br><br>
+      Status:
+      <select class="form-control" formControlName="status" required>
+          <option *ngFor="let opt of statusOptions" [value]="opt.value">{{opt.label}}</option>
+      </select>      
+  <br>
+      Priority:
+      <select class="form-control" formControlName="priority">
+            <option *ngFor="let opt of priorityOptions" [value]="opt.value">{{opt.label}}</option>
+      </select>
+  <br><br>
+      Description: <input type="text" formControlName="summary" /> 
+  <br><br>
+      Comments visible by user: admin and employee can add comments. No comments can be removed once added.
+      <input type="text" formControlName="comments" /> 
+  <br><br>
+      Work Notes: comments only visible by admin accounts, be sure to retain order based on timestamp with normal comments
+      <input type="text" formControlName="workNotes" /> 
+  <br><br>
+      Resolved comment (editable by admin only) use function to change to resolved
+      <input type="text" formControlName="resolvedComment" /> 
+  <br>
+      <button>Resolve</button>
+
+  </div>
+</form>
