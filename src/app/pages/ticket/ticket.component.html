@@ -17,7 +17,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <app-ticket-details [ticketFromParent] = "currentTicket"></app-ticket-details>
+      <app-ticket-details (closeModal)="modal.close('Save click')" [ticketFromParent] = "currentTicket"></app-ticket-details>
     </div>
   </ng-template>
 
