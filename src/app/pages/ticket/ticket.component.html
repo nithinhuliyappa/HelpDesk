@@ -17,7 +17,7 @@
       </button>
     </div>
     <div class="modal-body d-flex justify-content-center">
-      <app-ticket-details></app-ticket-details>
+      <app-ticket-details [ticketFromParent] = "currentTicket"></app-ticket-details>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click')">Save</button>
