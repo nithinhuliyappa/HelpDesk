@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from 'src/app/components/data-table/data-table.module';
 import { TicketFilterComponent } from './ticket-filter/ticket-filter.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TicketCommentsComponent } from './ticket-comments/ticket-comments.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     TicketListComponent,
     TicketDetailsComponent,
     TicketComponent,
-    TicketFilterComponent
+    TicketFilterComponent,
+    TicketCommentsComponent
   ],
   imports: [
     CommonModule,

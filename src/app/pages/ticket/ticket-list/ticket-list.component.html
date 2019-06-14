@@ -1,6 +1,6 @@
 <app-data-table [columns]="columns" [data]="items | async">
   <ng-template cellTemplate="status" let-dataItem>
-    <span>{{dataItem['status'] | titlecase}}</span>
+    <span>{{getStatus(dataItem['status'])}}</span>
   </ng-template>
   
   <ng-template cellTemplate="priority" let-dataItem>
@@ -11,6 +11,5 @@
     <a href="#" title="Edit" (click)="onRowClick(dataItem, $event)">
       <i class="material-icons icon-success">edit</i>
     </a>
-    <button (click)="updateStatus(dataItem)">Update Status</button>
   </ng-template>
 </app-data-table>

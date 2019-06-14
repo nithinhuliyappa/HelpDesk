@@ -1,41 +1,76 @@
 <form [formGroup]="editTicketForm" (ngSubmit)="updateTicket(editTicketForm.value)">
-
-  <div>
-      Assigned To: <input type="text" formControlName="assignedTo" />
-  <br><br>
-      Caller: <input type="text" formControlName="assignedUser" /> 
-  <br><br>
-      Created Date: <input type="text" formControlName="createdDate" size="22" disabled/>
-  <br><br>
-      Updated Date: <input type="text" formControlName="lastUpdatedDate" size="22" disabled/>
-  <br><br>
-      Status:
-      <select class="form-control" formControlName="status" required>
-          <option *ngFor="let opt of statusOptions" [value]="opt.value">{{opt.label}}</option>
-      </select>      
-  <br>
-      Priority:
-      <select class="form-control" formControlName="priority">
-            <option *ngFor="let opt of priorityOptions" [value]="opt.value">{{opt.label}}</option>
+  <div class="form-group row">
+    <label for="assignedTo" class="col-sm-4 col-form-label">Assigned To:</label>
+    <div class="col-sm-8">
+      <select *ngIf="isAdmin; else assignedToText" id="assignedTo" class="form-control" formControlName="assignedTo">
+        <option *ngFor="let opt of admins" [value]="opt.value">{{opt.label}}</option>
       </select>
-  <br><br>
-      Description: <input type="text" formControlName="summary" /> 
-  <br><br>
-      Comments visible by user: admin and employee can add comments. No comments can be removed once added.
-      <input type="text" formControlName="comments" /> 
-  <br><br>
-      Work Notes: comments only visible by admin accounts, be sure to retain order based on timestamp with normal comments
-      <input type="text" formControlName="workNotes" /> 
-  <br><br>
-      Resolved comment (editable by admin only) use function to change to resolved
-      <input type="text" formControlName="resolvedComment" /> 
-  <br>
-      <button>Resolve</button>
+      <ng-template #assignedToText>
+        <input id="assignedTo" type="text" formControlName="assignedUser" readonly class="form-control-plaintext">
+      </ng-template>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="createdUserName" class="col-sm-4 col-form-label">Caller:</label>
+    <div class="col-sm-8">
+      <input id="createdUserName" type="text" formControlName="createdUserName" readonly class="form-control-plaintext">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="createdDate" class="col-sm-4 col-form-label">Created Date:</label>
+    <div class="col-sm-8">
+      <input id="createdDate" type="text" formControlName="createdDate" readonly class="form-control-plaintext">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="lastUpdatedDate" class="col-sm-4 col-form-label">Updated Date:</label>
+    <div class="col-sm-8">
+      <input id="lastUpdatedDate" type="text" formControlName="lastUpdatedDate" readonly class="form-control-plaintext">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="description" class="col-sm-4 col-form-label">Description:</label>
+    <div class="col-sm-8">
+      <input id="description" type="text" formControlName="summary" readonly class="form-control-plaintext">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="status" class="col-sm-4 col-form-label">Status:</label>
+    <div class="col-sm-8">
+      <input id="status" type="text" formControlName="status" readonly class="form-control-plaintext"
+          [value]="editTicketForm.get('status').value | titlecase">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="priority" class="col-sm-4 col-form-label">Priority:</label>
+    <div class="col-sm-8">
+      <select *ngIf="isAdmin; else priorityText" id="priority" class="form-control" formControlName="priority">
+        <option *ngFor="let opt of priorityOptions" [value]="opt.value">{{opt.label}}</option>
+      </select>
+      <ng-template #priorityText>
+        <input id="priority" type="text" formControlName="priority" readonly class="form-control-plaintext"
+            [value]="editTicketForm.get('priority').value | titlecase">
+      </ng-template>
+    </div>
+  </div>
+  <div *ngIf="isAdmin" class="form-group row">
+    <label for="workNotes" class="col-sm-4 col-form-label">Work Notes:</label>
+    <div class="col-sm-8">
+      <textarea class="form-control" formControlName="workNotes" id="workNotes" rows="3"></textarea>
+    </div>
+  </div>
+  <div *ngIf="isAdmin" class="form-group row">
+    <label for="resolvedComment" class="col-sm-4 col-form-label">Resolved Comment:</label>
+    <div class="col-sm-8">
+      <textarea class="form-control" formControlName="resolvedComment" id="resolvedComment" rows="3"></textarea>
+    </div>
+  </div>
 
+  <div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-success mr-2">Resolved</button>
+    <button type="submit" *ngIf="isAdmin" class="btn btn-success">Submit</button>
   </div>
 </form>
 
-<br>
-<div class="modal-footer">
-        <button type="button" class="btn btn-outline-success" (click)="saveTicket()">Save</button>
-</div>
+<div class="dropdown-divider mb-3"></div>
+<app-ticket-comments [ticket]="ticketFromParent"></app-ticket-comments>
