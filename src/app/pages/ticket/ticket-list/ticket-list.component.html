@@ -1,6 +1,6 @@
 <app-data-table [columns]="columns" [data]="items | async">
   <ng-template cellTemplate="status" let-dataItem>
-    <span>{{dataItem['status'] | titlecase}}</span>
+    <span>{{getStatus(dataItem['status'])}}</span>
   </ng-template>
   
   <ng-template cellTemplate="priority" let-dataItem>

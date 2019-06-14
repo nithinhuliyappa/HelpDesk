@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/cor
 import { Observable } from 'rxjs';
 import { TicketService } from 'src/app/services/ticket.service';
 import { TICKET_COLUMNS } from './column.config';
+import { TICKET_STATUS } from 'src/app/metadata/ticket.metadata';
 
 @Component({
   selector: 'app-ticket-list',
@@ -16,6 +17,10 @@ export class TicketListComponent implements OnInit, OnDestroy {
   rowClick = new EventEmitter<any>();
 
   constructor(private ticket: TicketService) { }
+
+  getStatus(key) {
+    return TICKET_STATUS.find(status => key === status.value).label;
+  }
 
   ngOnInit() {
     this.items = this.ticket.tickets;
