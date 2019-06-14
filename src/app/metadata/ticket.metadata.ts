@@ -5,12 +5,13 @@ export interface Ticket {
   assignedTo: string;
   assignedUser: string;
   createdDate: string;
+  createdUser: string;
+  createdUserName: string;
   lastUpdatedDate: string;
   summary: string;
-  comments: string[];
-  workNotes: string[];
-  resolved: boolean;
-  resolvedComment: string[];
+  comments: string;
+  workNotes: string;
+  resolvedComment: string;
 }
 
 export const TICKET_STATUS = [

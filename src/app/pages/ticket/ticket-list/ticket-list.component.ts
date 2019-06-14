@@ -26,10 +26,6 @@ export class TicketListComponent implements OnInit, OnDestroy {
     this.ticket.destroy();
   }
 
-  updateStatus(ticketItem) {
-    this.ticket.updateTicketStatus(ticketItem, 'open');
-  }
-
   get columns() {
     return TICKET_COLUMNS;
   }

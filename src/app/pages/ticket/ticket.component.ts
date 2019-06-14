@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TicketService } from 'src/app/services/ticket.service';
+import { Ticket } from 'src/app/metadata/ticket.metadata';
 
 @Component({
   selector: 'app-ticket',
@@ -10,9 +10,9 @@ import { TicketService } from 'src/app/services/ticket.service';
 })
 export class TicketComponent implements OnInit {
 
-  currentTicket = null;
+  currentTicket: Ticket = null;
 
-  constructor(private modalService: NgbModal, private ticket: TicketService) { }
+  constructor(private modalService: NgbModal) { }
 
   ngOnInit() {
   }

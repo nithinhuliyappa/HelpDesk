@@ -20,6 +20,7 @@ export class TicketService {
   private _data: Ticket[];
   private _displayData$ = new Subject<Ticket[]>();
   private subs = new SubSink();
+  private _admins: UserProfile[];
 
   constructor(private db: AngularFireDatabase,
               private user: UserService,
@@ -55,6 +56,19 @@ export class TicketService {
         if (assignedUser) {
           data.assignedUser = assignedUser.firstName + ' ' + assignedUser.lastName;
         }
+
+        const createdUser = results[1].find(user => {
+          const userProfile = user as UserProfile;
+          return userProfile.uid === data.createdUser;
+        }) as UserProfile;
+        if (createdUser) {
+          data.createdUserName = createdUser.firstName + ' ' + createdUser.lastName;
+        }
+
+        this._admins = results[1].filter(user => {
+          const userProfile = user as UserProfile;
+          return userProfile.role === 'admin';
+        }) as UserProfile[];
         return data;
       });
       this.filter();
@@ -67,6 +81,15 @@ export class TicketService {
 
   get tickets() {
     return this._displayData$.asObservable();
+  }
+
+  get admins() {
+    return this._admins.map(admin => {
+      return {
+        label: admin.firstName + ' ' + admin.lastName,
+        value: admin.uid
+      };
+    });
   }
 
   filter() {
@@ -88,7 +111,7 @@ export class TicketService {
   // EX usage: this.ticket.updateTicketStatus(ticketItem, 'open');
   // where ticket is a TicketService object, and ticketItem as an item from the database
   // tested with <button (click)="updateStatus(dataItem)">Update Status</button> // on ticket-list html
-  updateTicketStatus(ticket, status: string) {
+  updateTicket(ticket: Ticket) {
     let statusToDatabase = '';
     // console.log(this.tickets);
     switch (status) {
@@ -112,7 +135,18 @@ export class TicketService {
         break;
     }
     if (statusToDatabase !== '') {
-      this.db.list('/tickets').update(ticket.id, { status: statusToDatabase });
+      this.db.list('/tickets').update(ticket.id, {
+        assignedTo: ticket.assignedTo,
+        createdDate: ticket.createdDate,
+        createdUser: ticket.createdUser,
+        lastUpdatedDate: ticket.lastUpdatedDate,
+        priority: ticket.priority,
+        status: ticket.status,
+        summary: ticket.summary,
+        comments: ticket.comments,
+        workNotes: ticket.workNotes,
+        resolvedComment: ticket.resolvedComment
+      });
     } else {
       console.log('Second parameter invalid to updateTicketStatus');
     }
