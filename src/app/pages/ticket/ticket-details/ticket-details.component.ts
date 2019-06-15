@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Ticket, TICKET_STATUS, TICKET_PRIORITY } from 'src/app/metadata/ticket.metadata';
 import { UserService } from 'src/app/services/user.service';
 import { TicketService } from 'src/app/services/ticket.service';
@@ -37,27 +37,43 @@ export class TicketDetailsComponent implements OnInit {
     return this.ticket.admins;
   }
 
+  get isPending() {
+    return this.ticketFromParent.status === 'pending';
+  }
+
+  getStatus(key) {
+    return TICKET_STATUS.find(status => key === status.value).label;
+  }
+
+  resolveTicket() {
+    const form = this.editTicketForm.value as Ticket;
+    form.status = 'resolved';
+    this.updateTicket(form);
+  }
+
   private buildForm() {
     this.editTicketForm = this.fb.group(
       {
-        assignedTo: ['', [ Validators.required]],
-        assignedUser: ['', [Validators.required]],
-        createdDate: ['', [Validators.required]],
-        createdUserName: ['', [Validators.required]],
-        lastUpdatedDate: ['', [Validators.required]],
-        status: ['', [Validators.required]],
-        priority: ['', [Validators.required]],
-        summary: ['', [Validators.required]],
-        workNotes: ['', [Validators.required]],
-        resolvedComment: ['', [Validators.required]]
+        assignedTo: new FormControl(''),
+        assignedUser: new FormControl(''),
+        createdDate: new FormControl(''),
+        createdUserName: new FormControl(''),
+        lastUpdatedDate: new FormControl(''),
+        status: new FormControl(''),
+        priority: new FormControl(''),
+        summary: new FormControl(''),
+        workNotes: new FormControl(''),
+        resolvedComment:new FormControl('')
       }
     );
   }
 
   updateTicket(formDataThatChanged: Ticket) {
-    this.ticket.updateTicket(formDataThatChanged, null);
-    // use this function to save any changed data to the database
-    this.closeModal.emit();
+    const form = Object.assign(this.ticketFromParent, formDataThatChanged);
+    this.ticket
+      .updateTicket(form)
+      .then((mesg: string) => this.closeModal.emit())
+      .catch(error => console.log(error));
   }
 
 }

@@ -39,6 +39,10 @@ export class TicketCommentsComponent implements OnInit, OnDestroy {
     return this.user.userProfile.uid;
   }
 
+  isAdmin(role) {
+    return role === 'admin';
+  }
+
   addComment() {
     this.ticketComment
     .addComment(this.ticket.id, this.userId, this.form.get('message').value)

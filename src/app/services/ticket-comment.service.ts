@@ -37,6 +37,7 @@ export class TicketCommentService {
 
           if (u) {
             comment.name = u.firstName + ' ' + u.lastName;
+            comment.role = u.role;
           }
           return comment;
         }))

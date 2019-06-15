@@ -18,10 +18,6 @@ export class TicketListComponent implements OnInit, OnDestroy {
 
   constructor(private ticket: TicketService) { }
 
-  getStatus(key) {
-    return TICKET_STATUS.find(status => key === status.value).label;
-  }
-
   ngOnInit() {
     this.items = this.ticket.tickets;
     this.ticket.getTickets();
@@ -29,6 +25,10 @@ export class TicketListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.ticket.destroy();
+  }
+
+  getStatus(key) {
+    return TICKET_STATUS.find(status => key === status.value).label;
   }
 
   get columns() {

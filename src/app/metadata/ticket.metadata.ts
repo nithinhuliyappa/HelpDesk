@@ -18,6 +18,7 @@ export interface TicketComment {
   message: string;
   uid: string;
   name: string;
+  role: string;
 }
 
 export const TICKET_STATUS = [
