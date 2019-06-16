@@ -1,4 +1,29 @@
-<!-- Remove this part when building login page -->
-<button (click)="login()">Log in</button>
-<button (click)="register()">Register</button>
-<!-- Remove this part when building login page -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+      <div class="card">
+        <div class="card-body">
+          <div class="imgcontainer">
+            <img src="assets/uncc-logo.png" alt="uncc-logo">
+            <h1>Login</h1>
+          </div>
+
+          <form [formGroup]="form" (ngSubmit)="login(form)">
+            <div class="form-group">
+              <input formControlName="email" type="email" class="form-control" placeholder="Enter email" name="email">
+            </div>
+            <div class="form-group">
+              <input formControlName="password" type="password" class="form-control" placeholder="Enter Password" name="password">
+            </div>
+            <button [disabled]="form.invalid" type="submit" class="btn btn-success mr-2">Login</button>
+            <button type="button" (click)="register()" class="btn btn-outline-success">Register</button>
+          </form>
+          <br/>
+          <small class="form-text text-muted">Note: For demo purposes, use the following login:</small>
+          <small id="emailHelp" class="form-text text-muted">Admin: admin@gmail.com - admin@1234</small>
+          <small id="emailHelp" class="form-text text-muted">Employee: employee@gmail.com - employee@1234</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +13,28 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
 
   constructor(private router: Router,
-              private auth: AuthService) { }
+              private auth: AuthService,
+              private toastr: ToastrService) { }
 
-  ngOnInit() {}
+  form: FormGroup;
+  loginFailure = new BehaviorSubject(false);
+
+  ngOnInit() {
+    this.form = new FormGroup({
+      email: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
+    });
+  }
 
   login() {
+    const email = this.form.get('email').value;
+    const password = this.form.get('password').value;
     const callback = () => this.router.navigate(['/home']);
-    this.auth.login('admin_john@gmail.com', 'admin@1234', callback);
+    const errorCallback = () => {
+      this.form.reset();
+      this.toastr.error('Invalid email/password', 'error');
+    };
+    this.auth.login(email, password, callback, errorCallback);
   }
 
   register() {
