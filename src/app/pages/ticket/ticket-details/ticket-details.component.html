@@ -74,4 +74,7 @@
 
 <h5>Comment History</h5>
 <div class="dropdown-divider mb-3"></div>
-<app-ticket-comments [ticket]="ticketFromParent"></app-ticket-comments>
+<app-ticket-comments 
+  [ticket]="ticketFromParent"
+  (adminComment)="onAdminComment()">
+</app-ticket-comments>

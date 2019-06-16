@@ -76,4 +76,10 @@ export class TicketDetailsComponent implements OnInit {
       .catch(error => console.log(error));
   }
 
+  onAdminComment() {
+    if (this.ticketFromParent.status === 'inProgress') {
+      this.ticketFromParent.status = 'pending';
+      this.updateTicket(this.ticketFromParent);
+    }
+  }
 }
