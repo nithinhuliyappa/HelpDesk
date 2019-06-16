@@ -10,6 +10,7 @@ export interface Ticket {
   lastUpdatedDate: string;
   description: string;
   subject: string;
+  department: string;
   comments?: TicketComment[];
   workNotes: string;
   resolvedComment: string;
@@ -32,10 +33,10 @@ export const TICKET_STATUS = [
 
 export const TICKET_DEPARTMENT = [
   {label: 'Choose Department...', value: ''},
-  {label: 'Network', value: 'network'},
-  {label: 'Phone', value: 'phone'},
-  {label: 'Desktop Software', value: 'desktopSoftware'},
-  {label: 'Desktop Hardware', value: 'desktopHardware'}
+  {label: 'Network', value: 'Network'},
+  {label: 'Phone', value: 'Phone'},
+  {label: 'Desktop Software', value: 'Desktop Software'},
+  {label: 'Desktop Hardware', value: 'Desktop Hardware'}
 ];
 
 export const TICKET_PRIORITY = [

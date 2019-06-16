@@ -63,7 +63,8 @@ export class TicketDetailsComponent implements OnInit {
         priority: new FormControl(''),
         description: new FormControl(''),
         workNotes: new FormControl(''),
-        resolvedComment:new FormControl('')
+        resolvedComment:new FormControl(''),
+        department: new FormControl('')
       }
     );
   }
