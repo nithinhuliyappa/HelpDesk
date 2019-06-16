@@ -68,18 +68,22 @@ export class TicketDetailsComponent implements OnInit {
     );
   }
 
-  updateTicket(formDataThatChanged: Ticket) {
+  updateTicket(formDataThatChanged: Ticket, closeModal = true) {
     const form = Object.assign(this.ticketFromParent, formDataThatChanged);
     this.ticket
       .updateTicket(form)
-      .then((mesg: string) => this.closeModal.emit())
+      .then((mesg: string) => {
+        if (closeModal) {
+          this.closeModal.emit();
+        }
+      })
       .catch(error => console.log(error));
   }
 
   onAdminComment() {
     if (this.ticketFromParent.status === 'inProgress') {
       this.ticketFromParent.status = 'pending';
-      this.updateTicket(this.ticketFromParent);
+      this.updateTicket(this.ticketFromParent, false);
     }
   }
 }
