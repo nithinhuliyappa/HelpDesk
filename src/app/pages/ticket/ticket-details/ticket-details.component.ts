@@ -61,7 +61,7 @@ export class TicketDetailsComponent implements OnInit {
         lastUpdatedDate: new FormControl(''),
         status: new FormControl(''),
         priority: new FormControl(''),
-        summary: new FormControl(''),
+        description: new FormControl(''),
         workNotes: new FormControl(''),
         resolvedComment:new FormControl('')
       }

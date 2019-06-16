@@ -124,12 +124,9 @@ export class TicketService {
 
     const result = this.db.list('/tickets').update(ticket.id, {
       assignedTo: ticket.assignedTo,
-      createdDate: ticket.createdDate,
-      createdUser: ticket.createdUser,
       lastUpdatedDate: ticket.lastUpdatedDate,
       priority: ticket.priority,
       status: ticket.status,
-      summary: ticket.summary,
       workNotes: ticket.workNotes,
       resolvedComment: ticket.resolvedComment
     });
@@ -150,5 +147,13 @@ export class TicketService {
 
   formatTime(time) {
     return ('0' + time).slice(-2);
+  }
+
+  addTicket(ticket: Ticket, userId: string) {
+    ticket.createdUser = userId;
+    ticket.createdDate = this.getCurrDateTime();
+    ticket.status = 'open';
+    const result = this.db.list(`/tickets`).push(ticket);
+    return result.then(() => result.key) as Promise<string>;
   }
 }

@@ -1,7 +1,7 @@
 import { ColumnConfig } from 'src/app/components/data-table/data-table.config';
 
 export const TICKET_COLUMNS: ColumnConfig[] = [
-  {field: 'summary', title: 'Summary'},
+  {field: 'subject', title: 'Subject'},
   {field: 'status', title: 'Status', cellTemplate: true},
   {field: 'priority', title: 'Priority', cellTemplate: true},
   {field: 'assignedUser', title: 'Assigned To'},
