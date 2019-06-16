@@ -1,3 +1,112 @@
-<p>
-  add-ticket works!
-</p>
+<div class="container-fluid mb-5">
+  <h1>Submit Ticket</h1>
+  <form
+    #addTicketForm="ngForm"
+    (ngSubmit)="ticketSubmit(addTicketForm)"
+    novalidate
+  >
+    <div class="form-group">
+      <input
+        type="text"
+        #subject="ngModel"
+        [class.is-invalid]="subject.invalid && subject.touched"
+        class="form-control"
+        name="subject"
+        ngModel
+        placeholder="Ticket Subject"
+        required
+      />
+      <small
+        [class.d-none]="subject.valid || subject.untouched"
+        class="text-danger"
+        >Required*</small
+      >
+    </div>
+
+    <div class="form-group">
+      <select
+        (blur)="validateDepartment(department.value)"
+        (change)="validateDepartment(department.value)"
+        #department="ngModel"
+        [class.is-invalid]="departmentHasError && department.touched"
+        class="custom-select"
+        name="department"
+        ngModel
+      >
+        <option value="default">Choose Department</option>
+        <option>Network</option>
+        <option>Phone</option>
+        <option>Desktop Software</option>
+        <option>Desktop Hardware</option>
+      </select>
+      <small
+        [class.d-none]="!departmentHasError || department.untouched"
+        class="text-danger"
+        >Required*</small
+      >
+    </div>
+
+    <div class="form-group">
+      <select
+        (blur)="validatePriority(priority.value)"
+        (change)="validatePriority(priority.value)"
+        #priority="ngModel"
+        [class.is-invalid]="priorityHasError && priority.touched"
+        class="custom-select"
+        name="priority"
+        ngModel
+      >
+        <option value="default">Choose Priority</option>
+        <option>Low</option>
+        <option>Medium</option>
+        <option>High</option>
+      </select>
+      <small
+        [class.d-none]="!priorityHasError || priority.untouched"
+        class="text-danger"
+        >Required*</small
+      >
+    </div>
+
+    <div class="form-group">
+      <textarea
+        #description="ngModel"
+        [class.is-invalid]="description.invalid && description.touched"
+        class="form-control"
+        name="description"
+        ngModel
+        rows="5"
+        placeholder="Ticket Description"
+        required
+      ></textarea>
+      <small
+        [class.d-none]="description.valid || description.untouched"
+        class="text-danger"
+        >Required*</small
+      >
+    </div>
+
+    <div class="row">
+      <div class="form-group col-2">
+        <button
+          class="btn btn-success btn-block my-2 my-sm-0"
+          type="submit"
+          [disabled]="
+            addTicketForm.form.invalid || departmentHasError || priorityHasError
+          "
+        >
+          Submit
+        </button>
+      </div>
+      <div class="form-group col-2">
+        <button
+          class="btn btn-outline-success btn-block my-2 my-sm-0"
+          (click)="cancel()"
+          type="button"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
