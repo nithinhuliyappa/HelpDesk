@@ -13,7 +13,7 @@ export class AuthService {
               private loader: LoaderService,
               private user: UserService) { }
 
-  register(user, callback){
+  register(user, callback) {
     return new Promise<any>((resolve, reject) => {
       this.authDb.auth.createUserWithEmailAndPassword(user.email, user.password).then(async res => {
         const { uid } = res.user;
@@ -30,7 +30,7 @@ export class AuthService {
     return this.authDb.auth.currentUser;
   }
 
-  login(email, password, callback) {
+  login(email, password, callback, errorCallback) {
     this.loader.startLoader();
     return new Promise<any>((resolve, reject) => {
       this.authDb.auth.signInWithEmailAndPassword(email, password)
@@ -41,7 +41,10 @@ export class AuthService {
           resolve(res);
         }, 500);
         this.user.getUserById(res.user.uid);
-      }, err => reject(err));
+      }, err => {
+        errorCallback();
+        this.loader.stopLoader();
+      });
     });
   }
 

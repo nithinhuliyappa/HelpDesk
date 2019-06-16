@@ -1,23 +1,35 @@
 <div class="container-fluid mb-5">
   <h1>Submit Ticket</h1>
   <form
-    #addTicketForm="ngForm"
-    (ngSubmit)="ticketSubmit(addTicketForm)"
+    [formGroup]="form"
+    (ngSubmit)="ticketSubmit()"
     novalidate
   >
     <div class="form-group">
       <input
         type="text"
-        #subject="ngModel"
-        [class.is-invalid]="subject.invalid && subject.touched"
+        [class.is-invalid]="form.get('subject').invalid && form.get('subject').touched"
         class="form-control"
-        name="subject"
-        ngModel
+        formControlName="subject"
         placeholder="Ticket Subject"
-        required
       />
       <small
-        [class.d-none]="subject.valid || subject.untouched"
+        [class.d-none]="form.get('subject').valid || form.get('subject').untouched"
+        class="text-danger"
+        >Required* and cannot exceed 10 characters</small
+      >
+    </div>
+
+    <div class="form-group">
+      <select
+        formControlName="department"
+        [class.is-invalid]="form.get('department').invalid && form.get('department').touched"
+        class="custom-select"
+      >
+        <option [value]="d.value" *ngFor="let d of departmentList">{{d.label}}</option>
+      </select>
+      <small
+        [class.d-none]="form.get('department').valid || form.get('department').untouched"
         class="text-danger"
         >Required*</small
       >
@@ -25,44 +37,14 @@
 
     <div class="form-group">
       <select
-        (blur)="validateDepartment(department.value)"
-        (change)="validateDepartment(department.value)"
-        #department="ngModel"
-        [class.is-invalid]="departmentHasError && department.touched"
+        [class.is-invalid]="form.get('priority').invalid && form.get('priority').touched"
         class="custom-select"
-        name="department"
-        ngModel
+        formControlName="priority"
       >
-        <option value="default">Choose Department</option>
-        <option>Network</option>
-        <option>Phone</option>
-        <option>Desktop Software</option>
-        <option>Desktop Hardware</option>
+        <option [value]="p.value" *ngFor="let p of priorityList">{{p.label}}</option>
       </select>
       <small
-        [class.d-none]="!departmentHasError || department.untouched"
-        class="text-danger"
-        >Required*</small
-      >
-    </div>
-
-    <div class="form-group">
-      <select
-        (blur)="validatePriority(priority.value)"
-        (change)="validatePriority(priority.value)"
-        #priority="ngModel"
-        [class.is-invalid]="priorityHasError && priority.touched"
-        class="custom-select"
-        name="priority"
-        ngModel
-      >
-        <option value="default">Choose Priority</option>
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
-      </select>
-      <small
-        [class.d-none]="!priorityHasError || priority.untouched"
+        [class.d-none]="form.get('priority').valid || form.get('priority').untouched"
         class="text-danger"
         >Required*</small
       >
@@ -70,43 +52,33 @@
 
     <div class="form-group">
       <textarea
-        #description="ngModel"
-        [class.is-invalid]="description.invalid && description.touched"
+        [class.is-invalid]="form.get('description').invalid && form.get('description').touched"
         class="form-control"
-        name="description"
-        ngModel
+        formControlName="description"
         rows="5"
         placeholder="Ticket Description"
-        required
       ></textarea>
       <small
-        [class.d-none]="description.valid || description.untouched"
+        [class.d-none]="form.get('description').valid || form.get('description').untouched"
         class="text-danger"
         >Required*</small
       >
     </div>
 
-    <div class="row">
-      <div class="form-group col-2">
-        <button
-          class="btn btn-success btn-block my-2 my-sm-0"
-          type="submit"
-          [disabled]="
-            addTicketForm.form.invalid || departmentHasError || priorityHasError
-          "
-        >
-          Submit
-        </button>
-      </div>
-      <div class="form-group col-2">
-        <button
-          class="btn btn-outline-success btn-block my-2 my-sm-0"
-          (click)="cancel()"
-          type="button"
-        >
-          Cancel
-        </button>
-      </div>
+    <div class="row ml-1">
+      <button
+        class="btn btn-success"
+        type="submit"
+        [disabled]="form.invalid || form.untouched">
+        Submit
+      </button>
+      <button
+        class="btn btn-outline-success ml-2"
+        (click)="cancel()"
+        type="button"
+      >
+        Cancel
+      </button>
     </div>
   </form>
 </div>

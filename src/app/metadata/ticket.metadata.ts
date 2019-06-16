@@ -8,7 +8,8 @@ export interface Ticket {
   createdUser: string;
   createdUserName: string;
   lastUpdatedDate: string;
-  summary: string;
+  description: string;
+  subject: string;
   comments?: TicketComment[];
   workNotes: string;
   resolvedComment: string;
@@ -18,6 +19,7 @@ export interface TicketComment {
   message: string;
   uid: string;
   name: string;
+  role: string;
 }
 
 export const TICKET_STATUS = [
@@ -26,6 +28,14 @@ export const TICKET_STATUS = [
   {label: 'In Progress ', value: 'inProgress'},
   {label: 'Pending User Response', value: 'pending'},
   {label: 'Resolved ', value: 'resolved'},
+];
+
+export const TICKET_DEPARTMENT = [
+  {label: 'Choose Department...', value: ''},
+  {label: 'Network', value: 'network'},
+  {label: 'Phone', value: 'phone'},
+  {label: 'Desktop Software', value: 'desktopSoftware'},
+  {label: 'Desktop Hardware', value: 'desktopHardware'}
 ];
 
 export const TICKET_PRIORITY = [

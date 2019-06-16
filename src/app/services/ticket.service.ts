@@ -39,7 +39,7 @@ export class TicketService {
     if (this.user.userProfile.role === 'employee') {
       obv1 = this.db.list('/tickets', ref => ref.orderByChild('createdUser').equalTo(uid)).snapshotChanges();
     } else {
-      obv1 = this.db.list('/tickets', ref => ref.orderByChild('assignedTo').equalTo(uid)).snapshotChanges();
+      obv1 = this.db.list('/tickets').snapshotChanges();
     }
     const obv2 = this.db.list('/users').valueChanges();
 
@@ -108,34 +108,52 @@ export class TicketService {
     this.filter();
   }
 
-  updateTicket(ticket: Ticket, callback) {
+  updateTicket(ticket: Ticket) {
 
-    // update 
-    if (ticket.status === 'open' && ticket.comments.length !== null) {
+    // status = inprogress when admin is first assigned
+    if (ticket.status === 'open' && ticket.assignedTo !== null) {
       ticket.status = 'inProgress';
+
+    // status = pending when admin posts a comment
+    } else if (ticket.status === 'inProgress' && ticket.assignedTo !== null) {
+      ticket.status = 'pending';
     }
 
     // update last updated time
     ticket.lastUpdatedDate = this.getCurrDateTime();
 
-    this.db.list('/tickets').update(ticket.id, {
+    const result = this.db.list('/tickets').update(ticket.id, {
       assignedTo: ticket.assignedTo,
-      createdDate: ticket.createdDate,
-      createdUser: ticket.createdUser,
       lastUpdatedDate: ticket.lastUpdatedDate,
       priority: ticket.priority,
       status: ticket.status,
-      summary: ticket.summary,
-      comments: ticket.comments,
       workNotes: ticket.workNotes,
       resolvedComment: ticket.resolvedComment
     });
+
+    return result.then(() => 'Successfully Updated') as Promise<string>;
   }
 
   getCurrDateTime() {
     const today = new Date();
-    const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    const time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    const date = today.getFullYear() + '-' +
+                 this.formatTime((today.getMonth() + 1)) + '-' +
+                 this.formatTime(today.getDate());
+    const time = this.formatTime(today.getHours()) + ':' +
+                 this.formatTime(today.getMinutes()) + ':' +
+                 this.formatTime(today.getSeconds());
     return date + ' ' + time; // use for when the user saves the ticket, the updated date changes to this value
+  }
+
+  formatTime(time) {
+    return ('0' + time).slice(-2);
+  }
+
+  addTicket(ticket: Ticket, userId: string) {
+    ticket.createdUser = userId;
+    ticket.createdDate = this.getCurrDateTime();
+    ticket.status = 'open';
+    const result = this.db.list(`/tickets`).push(ticket);
+    return result.then(() => result.key) as Promise<string>;
   }
 }
