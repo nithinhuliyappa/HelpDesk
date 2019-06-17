@@ -152,6 +152,7 @@ export class TicketService {
   addTicket(ticket: Ticket, userId: string) {
     ticket.createdUser = userId;
     ticket.createdDate = this.getCurrDateTime();
+    ticket.lastUpdatedDate = ticket.createdDate;
     ticket.status = 'open';
     const result = this.db.list(`/tickets`).push(ticket);
     return result.then(() => result.key) as Promise<string>;
