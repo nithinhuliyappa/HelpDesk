@@ -113,10 +113,6 @@ export class TicketService {
     // status = inprogress when admin is first assigned
     if (ticket.status === 'open' && ticket.assignedTo !== null) {
       ticket.status = 'inProgress';
-
-    // status = pending when admin posts a comment
-    } else if (ticket.status === 'inProgress' && ticket.assignedTo !== null) {
-      ticket.status = 'pending';
     }
 
     // update last updated time
