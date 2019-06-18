@@ -85,7 +85,7 @@ export class TicketService {
 
   get admins() {
     const admins = [];
-    admins.push({label: 'Pick admin user', value: ''});
+    admins.push({label: 'Pick Admin User', value: ''});
     this._admins.forEach(admin => {
       admins.push({
         label: admin.firstName + ' ' + admin.lastName,
