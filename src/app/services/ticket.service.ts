@@ -84,12 +84,15 @@ export class TicketService {
   }
 
   get admins() {
-    return this._admins.map(admin => {
-      return {
+    const admins = [];
+    admins.push({label: 'Pick Admin User', value: ''});
+    this._admins.forEach(admin => {
+      admins.push({
         label: admin.firstName + ' ' + admin.lastName,
         value: admin.uid
-      };
+      });
     });
+    return admins;
   }
 
   filter() {
